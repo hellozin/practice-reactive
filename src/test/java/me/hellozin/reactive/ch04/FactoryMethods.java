@@ -112,7 +112,7 @@ public class FactoryMethods {
                     data -> log.info("Received data: {}", data)
             );
         } catch (Exception e) {
-            log.info("Error: {}", e.getMessage());
+            log.error("Error: {}", e.getMessage());
         }
     }
 
@@ -128,22 +128,25 @@ public class FactoryMethods {
 
         ioRequestResults.subscribe(
                 data -> log.info("Received data {}", data),
-                e -> log.info("Error: {}", e.getMessage()),
+                e -> log.error("Error: {}", e.getMessage()),
                 () -> log.info("Stream finished"));
     }
 
     @Test
     void fluxUsingWhen() {
+        Flux<String> rows = Flux.just("A", "B", "C");
         Flux.usingWhen(
                 Transaction.beginTransaction(),
-                transaction -> transaction.insertRows(Flux.just("A")),
+                transaction -> transaction.insertRows(rows),
                 Transaction::commit,
                 Transaction::rollback
         ).subscribe(
                 d -> log.info("onNext: {}", d),
-                e -> log.info("onError: {}", e.getMessage()),
+                e -> log.error("onError: {}", e.getMessage()), // RuntimeException 메시지가 출력되지 않는듯?
                 () -> log.info("onComplete")
         );
+
+        sleep(1000);
     }
 
     private void sleep(int millis) {
