@@ -132,21 +132,19 @@ public class FactoryMethods {
                 () -> log.info("Stream finished"));
     }
 
-    // TODO: fix it
-//    @Test
-//    void fluxUsingWhen() {
-//        Flux.usingWhen(
-//                Transaction.beginTransaction(),
-//                transaction -> transaction.insertRow(Flux.just("A")),
-//                Transaction::commit,
-//                Transaction::rollback,
-//                Transaction::rollback
-//        ).subscribe(
-//                d -> log.info("onNext: {}", d),
-//                e -> log.info("onError: {}", e.getMessage()),
-//                () -> log.info("onComplete")
-//        );
-//    }
+    @Test
+    void fluxUsingWhen() {
+        Flux.usingWhen(
+                Transaction.beginTransaction(),
+                transaction -> transaction.insertRows(Flux.just("A")),
+                Transaction::commit,
+                Transaction::rollback
+        ).subscribe(
+                d -> log.info("onNext: {}", d),
+                e -> log.info("onError: {}", e.getMessage()),
+                () -> log.info("onComplete")
+        );
+    }
 
     private void sleep(int millis) {
         try {
