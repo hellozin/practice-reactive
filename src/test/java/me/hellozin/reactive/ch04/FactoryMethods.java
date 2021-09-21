@@ -23,7 +23,7 @@ public class FactoryMethods {
     // Do not care about backpressure and cancellation
 
     @Test
-    void previous() {
+    void previousWay() {
         // Create reactive streams of arrays, futures, and blocking requests.
         Flux.just(1, 2, 3);
 
@@ -32,6 +32,8 @@ public class FactoryMethods {
                 .subscribe(onNextLoggingConsumer);
         sleep(1000);
     }
+
+    // Complicated signal generate, bind object life-cycle to life-cycle of reactive stream.
 
     @Test
     void fluxPush() {
@@ -42,7 +44,7 @@ public class FactoryMethods {
 
         consumer.accept(IntStream.range(1, 10));
 
-        sleep(100);
+        sleep(1000);
     }
 
     @Test
@@ -57,7 +59,7 @@ public class FactoryMethods {
         t1.start();
         t2.start();
 
-        sleep(10000);
+        sleep(1000);
     }
 
     // public static <T> Flux<T> create(Consumer<? super FluxSink<T>> emitter)
@@ -70,17 +72,15 @@ public class FactoryMethods {
                 })
                 .subscribe(onNextLoggingConsumer);
 
-
         Thread t1 = new Thread(() -> consumer.accept(IntStream.range(1, 5)));
         Thread t2 = new Thread(() -> consumer.accept(IntStream.range(5, 10)));
 
         t1.start();
         t2.start();
 
-        log.info("Disposed? {}", disposed.isDisposed());
-
         sleep(1000);
 
+        log.info("Disposed? {}", disposed.isDisposed());
         disposed.dispose();
         log.info("Disposed? {}", disposed.isDisposed());
     }
@@ -96,7 +96,7 @@ public class FactoryMethods {
                             long newValue = state.getT1() + state.getT2();
                             return Tuples.of(state.getT2(), newValue);
                         })
-                .delayElements(Duration.ofMillis(1))    // delay가 있으면 sync 하게 구독하지 않는다
+//                .delayElements(Duration.ofMillis(1))    // delay가 있으면 sync 하게 구독하지 않는다
                 .take(7)
                 .subscribe(onNextLoggingConsumer);
 
