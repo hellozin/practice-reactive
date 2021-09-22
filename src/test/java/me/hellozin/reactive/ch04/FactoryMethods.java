@@ -1,5 +1,7 @@
 package me.hellozin.reactive.ch04;
 
+import static me.hellozin.reactive.Sleep.sleep;
+
 import java.time.Duration;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -147,14 +149,6 @@ public class FactoryMethods {
         );
 
         sleep(1000);
-    }
-
-    private void sleep(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 }
