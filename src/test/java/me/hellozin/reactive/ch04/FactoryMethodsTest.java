@@ -12,9 +12,9 @@ import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.util.function.Tuples;
 
-public class FactoryMethods {
+class FactoryMethodsTest {
 
-    private static final Logger log = LoggerFactory.getLogger(FactoryMethods.class);
+    private static final Logger log = LoggerFactory.getLogger(FactoryMethodsTest.class);
 
     private Consumer<IntStream> consumer;
     private final Consumer<Object> onNextLoggingConsumer = item -> log.info("onNext: {}", item);
