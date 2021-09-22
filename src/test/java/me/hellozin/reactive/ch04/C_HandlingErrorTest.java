@@ -28,9 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 
-class HandlingErrorTest {
+class C_HandlingErrorTest {
 
-    private static final Logger log = LoggerFactory.getLogger(HandlingErrorTest.class);
+    private static final Logger log = LoggerFactory.getLogger(C_HandlingErrorTest.class);
     private static final Random random = new Random();
 
     @Test
